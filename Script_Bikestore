@@ -8,9 +8,11 @@ CREATE TABLE Proveedor (
     id_Proveedor INT NOT NULL AUTO_INCREMENT,
     Empresa VARCHAR(255) NOT NULL,
     Nombre VARCHAR(255) NOT NULL,
+    Documento VARCHAR(20) NOT NULL,
     Dirección VARCHAR(255) NOT NULL,
     Teléfono VARCHAR(20) NOT NULL,
-    PRIMARY KEY (id_Proveedor)
+    PRIMARY KEY (id_Proveedor),
+	UNIQUE (Documento)
 );
 
 -- Creación de la tabla Cliente
@@ -18,9 +20,11 @@ CREATE TABLE Cliente (
     id_Cliente INT NOT NULL AUTO_INCREMENT,
     Nombre VARCHAR(255) NOT NULL,
     Apellido VARCHAR(255) NOT NULL,
+	Documento VARCHAR(20) NOT NULL,
     Correo VARCHAR(255) NOT NULL,
     Teléfono VARCHAR(20) NOT NULL,
-	PRIMARY KEY (id_Cliente)
+	PRIMARY KEY (id_Cliente),
+    UNIQUE (Documento)
 );
 
 -- Creación de la tabla Supervisor
@@ -28,12 +32,14 @@ CREATE TABLE Supervisor (
     id_Supervisor INT NOT NULL AUTO_INCREMENT,
     Nombre VARCHAR(255) NOT NULL,
     Apellido VARCHAR(255) NOT NULL,
+    Documento VARCHAR(20) NOT NULL,
     Teléfono VARCHAR(20) NOT NULL,
     Dirección VARCHAR(255) NOT NULL,
     Correo VARCHAR(255) NOT NULL,
     id_Proveedor INT NOT NULL,
 	PRIMARY KEY (id_Supervisor),
-    FOREIGN KEY (id_Proveedor) REFERENCES Proveedor(id_Proveedor)
+    FOREIGN KEY (id_Proveedor) REFERENCES Proveedor(id_Proveedor),
+    UNIQUE (Documento)
 );
 
 -- Creación de la tabla Empleado
@@ -41,15 +47,16 @@ CREATE TABLE Empleado (
     id_Empleado INT NOT NULL AUTO_INCREMENT,
     Nombre VARCHAR(255) NOT NULL,
     Apellido VARCHAR(255) NOT NULL,
+	Documento VARCHAR(20) NOT NULL,
     Rol VARCHAR(100) NOT NULL,
-    Salario DECIMAL(10,2) NOT NULL,
     Dirección VARCHAR(255) NOT NULL,
     Teléfono VARCHAR(20) NOT NULL,
     id_Cliente INT NOT NULL,
     id_Supervisor INT NOT NULL,
 	PRIMARY KEY (id_Empleado),
     FOREIGN KEY (id_Cliente) REFERENCES Cliente(id_Cliente),
-    FOREIGN KEY (id_Supervisor) REFERENCES Supervisor(id_Supervisor)
+    FOREIGN KEY (id_Supervisor) REFERENCES Supervisor(id_Supervisor),
+    UNIQUE (Documento)
 );
 
 -- Creación de la tabla Compra
@@ -152,7 +159,10 @@ CREATE TABLE Reg_Actividad (
     Fecha DATE NOT NULL,
     Actividad VARCHAR(255) NOT NULL,
     Hs_extras DECIMAL(10,2) NOT NULL,
+	Salario DECIMAL(10,2) NOT NULL,
     id_Empleado INT NOT NULL,
+    id_Supervisor INT NOT NULL,
 	PRIMARY KEY (id_Actividad),
-    FOREIGN KEY (id_Empleado) REFERENCES Empleado(id_Empleado)
+    FOREIGN KEY (id_Empleado) REFERENCES Empleado(id_Empleado),
+    FOREIGN KEY (id_Supervisor) REFERENCES Supervisor(id_Supervisor)
 );
