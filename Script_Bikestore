@@ -8,11 +8,10 @@ CREATE TABLE Proveedor (
     id_Proveedor INT NOT NULL AUTO_INCREMENT,
     Empresa VARCHAR(255) NOT NULL,
     Nombre VARCHAR(255) NOT NULL,
-    Documento VARCHAR(20) NOT NULL,
+    Documento VARCHAR(20) NOT NULL UNIQUE,
     Dirección VARCHAR(255) NOT NULL,
     Teléfono VARCHAR(20) NOT NULL,
-    PRIMARY KEY (id_Proveedor),
-	UNIQUE (Documento)
+    PRIMARY KEY (id_Proveedor)
 );
 
 -- Creación de la tabla Cliente
@@ -20,11 +19,10 @@ CREATE TABLE Cliente (
     id_Cliente INT NOT NULL AUTO_INCREMENT,
     Nombre VARCHAR(255) NOT NULL,
     Apellido VARCHAR(255) NOT NULL,
-	Documento VARCHAR(20) NOT NULL,
+	Documento VARCHAR(20) NOT NULL UNIQUE,
     Correo VARCHAR(255) NOT NULL,
     Teléfono VARCHAR(20) NOT NULL,
-	PRIMARY KEY (id_Cliente),
-    UNIQUE (Documento)
+	PRIMARY KEY (id_Cliente)
 );
 
 -- Creación de la tabla Supervisor
@@ -32,14 +30,13 @@ CREATE TABLE Supervisor (
     id_Supervisor INT NOT NULL AUTO_INCREMENT,
     Nombre VARCHAR(255) NOT NULL,
     Apellido VARCHAR(255) NOT NULL,
-    Documento VARCHAR(20) NOT NULL,
+    Documento VARCHAR(20) NOT NULL UNIQUE,
     Teléfono VARCHAR(20) NOT NULL,
     Dirección VARCHAR(255) NOT NULL,
     Correo VARCHAR(255) NOT NULL,
     id_Proveedor INT NOT NULL,
 	PRIMARY KEY (id_Supervisor),
-    FOREIGN KEY (id_Proveedor) REFERENCES Proveedor(id_Proveedor),
-    UNIQUE (Documento)
+    FOREIGN KEY (id_Proveedor) REFERENCES Proveedor(id_Proveedor)
 );
 
 -- Creación de la tabla Empleado
@@ -47,7 +44,7 @@ CREATE TABLE Empleado (
     id_Empleado INT NOT NULL AUTO_INCREMENT,
     Nombre VARCHAR(255) NOT NULL,
     Apellido VARCHAR(255) NOT NULL,
-	Documento VARCHAR(20) NOT NULL,
+	Documento VARCHAR(20) NOT NULL UNIQUE,
     Rol VARCHAR(100) NOT NULL,
     Dirección VARCHAR(255) NOT NULL,
     Teléfono VARCHAR(20) NOT NULL,
@@ -55,8 +52,7 @@ CREATE TABLE Empleado (
     id_Supervisor INT NOT NULL,
 	PRIMARY KEY (id_Empleado),
     FOREIGN KEY (id_Cliente) REFERENCES Cliente(id_Cliente),
-    FOREIGN KEY (id_Supervisor) REFERENCES Supervisor(id_Supervisor),
-    UNIQUE (Documento)
+    FOREIGN KEY (id_Supervisor) REFERENCES Supervisor(id_Supervisor)
 );
 
 -- Creación de la tabla Compra
